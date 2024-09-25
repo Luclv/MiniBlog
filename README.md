@@ -5,14 +5,14 @@ Features
 ASP.NET MVC Blog
 
 Tech Stacks:
-ASP.NET MVC
-Routing
-Validation
-ViewModel
-Entitiy Framework
-Code First
-Migration
-Automapper
+1. ASP.NET MVC
+2. Routing
+3. Validation
+4. ViewModel
+5. Entitiy Framework
+6. Code First
+7. Migration
+8. Automapper
 
 How to use
 1. For Editor: Register account and post blog. Editor can edit own blog
