@@ -1,0 +1,17 @@
+﻿@model MiniBlog.ViewModels.BlogDetailViewModel
+
+@{
+	ViewBag.Title = "Read " + Model.Title;
+}
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+<h2>@Html.LabelFor(m => m.Title): @Html.DisplayTextFor(m => m.Title)</h2>
+<h3>@Html.LabelFor(m => m.Status): @Html.DisplayTextFor(m => m.Status)</h3>
+<img src="@Url.Action("GetImage", new {id = Model.Id })" />
+
+@Html.TextAreaFor(m => m.Content, new { @id= "Content", @class = "form-control my-input", @readonly="readonly", @style = "height:400px; max-width:80%" })
+
+
+<script>
+	CKEDITOR.replace('Content');
+</script>

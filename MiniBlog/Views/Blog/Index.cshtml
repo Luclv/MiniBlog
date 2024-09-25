@@ -1,0 +1,56 @@
+﻿@using PagedList.Mvc;
+@model MiniBlog.ViewModels.ShowAllBlogsViewModel
+@{
+    ViewBag.Title = "Blogs";
+}
+
+@if (@User.Identity.IsAuthenticated)
+{
+    <br />
+    @Html.ActionLink("New Blog", "New",null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("View My Blogs", "ViewOwnBlogs", null, new { @class = "btn btn-primary" })
+}
+
+
+<h2>Blogs</h2>
+<div>
+
+
+</div>
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+		<tr>
+			<th class="title-font" scope="col">Blog Title</th>
+			<th class="title-font" scope="col">Date Created</th>
+			<th class="title-font" scope="col">Author</th>
+            <th class="title-font" scope="col">Status</th>
+            <th class="title-font" scope="col">Action</th>
+		</tr>
+    </thead>
+    <tbody>
+    @for (int i = 0; i < Model.BlogList.Count(); i++)
+    {
+		<tr>
+			<td class="col-md-4 larger-font">@Model.BlogList[i].Title</td>
+			<td class="col-md-4 larger-font">@Model.BlogList[i].CreatedAt</td>
+			<td class="col-md-4 larger-font">@Model.BlogList[i].Owner</td>
+            <td class="col-md-4 larger-font">@Model.BlogList[i].Status</td>
+
+            <td class="col-md-4">
+                @if (Model.ViewOrEdit == "Edit")
+                {
+                    @Html.ActionLink("Edit", "Edit", new { Model.BlogList[i].Id }, new { @class = "btn primary-btn" })
+                }
+                @Html.ActionLink("Read", "Read", new { Model.BlogList[i].Id }, new { @class = "btn primary-btn" })	
+            </td>
+		</tr>
+
+    }
+    </tbody>
+</table>
+
+
+<br />
+Page @(Model.BlogList.PageCount < Model.BlogList.PageNumber ? 0 : Model.BlogList.PageNumber) of @Model.BlogList.PageCount
+
+@Html.PagedListPager(Model.BlogList, page => Url.Action(Model.ViewOrEdit == "View" ? "Index" : "ViewOwnBlogs", new { page }))

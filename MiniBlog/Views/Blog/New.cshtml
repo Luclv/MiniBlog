@@ -1,0 +1,34 @@
+﻿@model MiniBlog.ViewModels.BlogViewModel
+@{
+	ViewBag.Title = "New Blog";
+}
+
+<h2>New Blog</h2>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+@using (Html.BeginForm("Save", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+	<div class="form-group">
+		@Html.LabelFor(m => m.Title, new { @class = "indent my-input" })
+		@Html.TextBoxFor(m => m.Title, new { @class = "form-control my-input" })
+		@Html.ValidationMessageFor(m => m.Title)
+	</div>
+
+	<br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.Banner, new { @class = "indent my-input" })
+		<input type="file" name="ImageData" id="ImageData" onchange="fileCheck(this);" />
+	</div>
+	<br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.Content, new { @class = "indent" })
+		@Html.TextAreaFor(m => m.Content, new { @id = "Content", @class = "form-control my-input", @style = "height:400px; max-width:80%" })
+		@Html.ValidationMessageFor(m => m.Content)
+	</div>
+	<button type="submit" class="btn btn-primary indent">Submit</button>
+}
+
+<script>
+	CKEDITOR.replace('Content');
+</script>

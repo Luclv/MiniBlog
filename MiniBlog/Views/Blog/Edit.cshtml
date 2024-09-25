@@ -1,0 +1,44 @@
+﻿@model MiniBlog.ViewModels.BlogViewModel
+@{
+	ViewBag.Title = "Edit Blog";
+}
+
+<h2>Edit Blog</h2>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+@using (Html.BeginForm("Save", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+	@Html.HiddenFor(m=> m.Id)
+	<div class="form-group">
+		@Html.LabelFor(m => m.Title, new { @class = "indent my-input" })
+		@Html.TextBoxFor(m => m.Title, new { @class = "form-control my-input" })
+		@Html.ValidationMessageFor(m => m.Title)
+	</div>
+
+	<br />
+	<div class="form-group">
+		@Html.LabelFor(m => m.Banner, new { @class = "indent my-input" })
+        <img src="@Url.Action("GetImage", new {id = Model.Id })" />
+		<input type="file" name="ImageData" id="ImageData" onchange="fileCheck(this);" />
+	</div>
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Status, new { @class = "indent my-input" })
+        @Html.DropDownListFor(m => m.Status, Model.StatusSelectList, Model.Status, new { @class = "form-control my-input" })
+        @Html.ValidationMessageFor(m => m.Status)
+    </div>
+	
+
+	<br />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Content, new { @class = "indent" })
+        @Html.TextAreaFor(m => m.Content, new { @id= "Content", @class = "form-control my-input", @style = "height:400px; max-width:80%" })
+        @Html.ValidationMessageFor(m => m.Content)
+    </div>
+	<button type="submit" class="btn btn-primary indent">Submit</button>
+}
+<script>
+	CKEDITOR.replace('Content');
+</script>
+
